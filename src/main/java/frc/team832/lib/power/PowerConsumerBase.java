@@ -1,35 +1,25 @@
 package frc.team832.lib.power;
 
-public abstract class PowerConsumerBase {
+import java.util.IdentityHashMap;
 
-    private PowerPriority mPriority;
-    private int mPowerCap;
+public interface PowerConsumerBase {
 
-    public PowerConsumerBase() {
-        mPriority = PowerPriority.LOW;
+    public static IdentityHashMap<Object, PowerPriority> priorityMap = new IdentityHashMap<Object, PowerPriority>();
+    public static IdentityHashMap<Object, Integer> powerCapMap = new IdentityHashMap<Object, Integer>();
+
+    default public void setPriority(PowerPriority priority) { 
+        priorityMap.put(this, PowerPriority.LOW);
     }
 
-    public void setPriority(PowerPriority priority) { mPriority = priority; }
+    default public PowerPriority getPriority() { return priorityMap.getOrDefault(this, PowerPriority.LOW); }
 
-    public PowerPriority getPriority() { return mPriority; }
-
-    public double getPowerConsumption() { return getConsumerVoltage() * getConsumerCurrent(); }
+    default public double getPowerConsumption() { return getConsumerVoltage() * getConsumerCurrent(); }
 
     public abstract double getConsumerVoltage();
     public abstract double getConsumerCurrent();
 
-    protected void setMaxConsumption(int powerCap) {
-        mPowerCap = powerCap;
-        capConsumption(powerCap);
-    }
-
-    protected void unsetMaxConsumption() {
-        mPowerCap = 0;
-        uncapConsumption();
-    }
-
-    public abstract void capConsumption(int powerCap);
+    public void capConsumption(int powerCap);
     public abstract void uncapConsumption();
 
-    public int getPowerCap() { return mPowerCap; }
+    default public int getPowerCap() { return powerCapMap.getOrDefault(this, 0); }
 }
