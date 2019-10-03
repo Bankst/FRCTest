@@ -8,12 +8,8 @@
 package frc.team832.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.team832.lib.driverstation.controllers.POV;
-import frc.team832.robot.commands.*;
+import frc.team832.lib.driverstation.dashboard.DashboardManager;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,29 +20,20 @@ import frc.team832.robot.commands.*;
  */
 public class Robot extends TimedRobot {
 
-	POVButton upButton = new POVButton(RobotContainer.stick, 0);
-
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
-		CommandBase onCenter = new CenterCommand(RobotContainer.mTestSubsystem);
-		RobotContainer.stick.getPOVButton(POV.Position.Up).whenPressed(new UpCommand(RobotContainer.mTestSubsystem)).whenReleased(onCenter);
-		RobotContainer.stick.getPOVButton(POV.Position.Down).whenPressed(new DownCommand(RobotContainer.mTestSubsystem)).whenReleased(onCenter);
-	}
+		if (RobotContainer.init()) {
 
-	POV.Position lastPov = POV.Position.Center;
+		}
+	}
 
 	@Override
 	public void robotPeriodic() {
-		CommandScheduler.getInstance().run();
-		POV.Position curPov = RobotContainer.stick.POV.getPosition();
-		if (curPov != lastPov) {
-			SmartDashboard.putString("POV Position", curPov.toString());
-		}
-		lastPov = curPov;
+		DashboardManager.updateAllTabs();
 	}
 
 	@Override
@@ -55,6 +42,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousPeriodic() {
+		CommandScheduler.getInstance().run();
 	}
 
 	@Override
@@ -63,6 +51,15 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
+		CommandScheduler.getInstance().run();
+	}
+
+	@Override
+	public void disabledInit() {
+	}
+
+	@Override
+	public void disabledPeriodic() {
 	}
 
 	@Override

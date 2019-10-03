@@ -1,6 +1,6 @@
 package frc.team832.lib.driverstation.dashboard;
 
-public enum ShuffleboardWidget {
+public enum DashboardWidget {
 	TextView("Text View"),
 	BooleanBox("Boolean Box"),
 	ToggleButton("Toggle Button"),
@@ -8,7 +8,7 @@ public enum ShuffleboardWidget {
 
 	public final String name;
 
-	ShuffleboardWidget(String name) {
+	DashboardWidget(String name) {
 		this.name = name;
 	}
 }

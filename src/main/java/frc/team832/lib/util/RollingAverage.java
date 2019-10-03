@@ -1,12 +1,12 @@
 package frc.team832.lib.util;
 
-public class Rolling {
+public class RollingAverage {
 	private int size;
 	private double total = 0d;
 	private int index = 0;
-	private double samples[];
+	private double[] samples;
 
-	public Rolling(int size) {
+	public RollingAverage(int size) {
 		this.size = size;
 		samples = new double[size];
 		for (int i = 0; i < size; i++) samples[i] = 0d;

@@ -6,13 +6,12 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 import java.util.HashMap;
 
-@SuppressWarnings("WeakerAccess")
-public class ShuffleboardManager {
+public class DashboardManager {
 
 	private static final String WIDGET_TEXTBOX = "Text Box";
 	private static final String WIDGET_BOOLEAN = "Boolean Box";
 
-	private ShuffleboardManager() {
+	private DashboardManager() {
 		throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
 	}
 
@@ -20,20 +19,20 @@ public class ShuffleboardManager {
 
 	public static void addTab(DashboardUpdatable updatable) {
 		if (!shuffleboardTabs.containsKey(updatable)) {
-			shuffleboardTabs.put(updatable, Shuffleboard.getTab(updatable.getShuffleboardTabName()));
+			shuffleboardTabs.put(updatable, Shuffleboard.getTab(updatable.getDashboardTabName()));
 		}
 	}
 
-	public static NetworkTableEntry addTabItem(DashboardUpdatable updatable, String itemName, Object defaultValue, ShuffleboardWidget widget) {
+	public static NetworkTableEntry addTabItem(DashboardUpdatable updatable, String itemName, Object defaultValue, DashboardWidget widget) {
 		if (!shuffleboardTabs.containsKey(updatable)) return null;
 		return shuffleboardTabs.get(updatable).add(itemName, defaultValue).withWidget(widget.name).getEntry();
 	}
 
 	public static NetworkTableEntry addTabItem(DashboardUpdatable updatable, String itemName, Object defaultValue) {
-		return addTabItem(updatable, itemName, defaultValue, ShuffleboardWidget.TextView);
+		return addTabItem(updatable, itemName, defaultValue, DashboardWidget.TextView);
 	}
 
 	public static void updateAllTabs() {
-		shuffleboardTabs.forEach((key, value) -> key.updateShuffleboardData());
+		shuffleboardTabs.forEach((key, value) -> key.updateDashboardData());
 	}
 }

@@ -1,6 +1,6 @@
-package frc.team832.lib.telemetry;
+package frc.team832.lib.driverstation.dashboard;
 
 public interface DashboardUpdatable {
-	String getShuffleboardTabName();
-	void updateShuffleboardData();
+	String getDashboardTabName();
+	void updateDashboardData();
 }

@@ -1,15 +1,27 @@
 package frc.team832.robot;
 
-import frc.team832.lib.driverstation.controllers.SWPrecisionPro;
-import frc.team832.robot.subsystems.TestSubsystem;
+import edu.wpi.first.wpilibj.shuffleboard.EventImportance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import frc.team832.lib.driverstation.controllers.Xbox360Controller;
+import frc.team832.robot.subsystems.VisionSubsystem;
 
 public class RobotContainer {
-    public static SWPrecisionPro stick = new SWPrecisionPro(0);
+    private RobotContainer() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
 
-    public static TestSubsystem mTestSubsystem;
+    public static final Xbox360Controller xb360 = new Xbox360Controller(0);
+
+    public static final VisionSubsystem visionSubsystem = new VisionSubsystem();
+
+    private static boolean initStatus = true;
 
     public static boolean init() {
-        mTestSubsystem = new TestSubsystem();
+        Shuffleboard.addEventMarker("CONTAINER", "INIT - BEGIN", EventImportance.kLow);
+
+        initStatus = visionSubsystem.init();
+
+        Shuffleboard.addEventMarker("CONTAINER", "INIT - COMPLETE", EventImportance.kLow);
         return true;
     }
 }
